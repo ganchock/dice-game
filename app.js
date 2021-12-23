@@ -33,15 +33,23 @@ document.querySelector('.btn-roll').addEventListener('click', function shooShid(
         roundScore = roundScore + diceNumber;
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     } else {
-        // 1 буусан тул тоглогчийн ээлжийг энэ хэсэгт сольж өгнө.
+        switchToNextPlayer()
+    }
+});
 
-        // Энэ тоглогчийн ээлжиндээ цуглуулсан оноог 0 болгоно.
+// HOLD товчны эвент листенер
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    // Уг тоглогчийн цуглуулсан ээлжний оноог глобаль оноон дээр нь нэмж өгнө.
+    scores[activePlayer] = scores[activePlayer] + roundScore;
+    // Дэлгэц дээр оноог нь өөрчилнө.
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+
+    // Энэ тоглогчийн ээлжиндээ цуглуулсан оноог 0 болгоно.
+    function switchToNextPlayer() {
         roundScore = 0;
         document.getElementById('current-' + activePlayer).textContent = 0;
 
-        // Хэрэв идэвхтэй тоглогч нь 0 байвал идэвхтэй тоглогчийг 1 болго.
-        // Үгүй бол идэвхтэй тоглогчийг 0 болго.
-
+        // Тоглогчийн ээлжийг нөгөө тоглогч руу шилжүүлнэ. 
         activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
 
         // Улаан цэгийг шилжүүлэх
@@ -50,10 +58,8 @@ document.querySelector('.btn-roll').addEventListener('click', function shooShid(
 
         // Шоог түр алга болгоно
         diceDom.style.display = 'none'
-            // if (activePlayer === 0) {
-            //     activePlayer === 1;
-            // } else {
-            //     activePlayer === 0;
-            // }
     }
-});
+    switchToNextPlayer();
+
+
+})
